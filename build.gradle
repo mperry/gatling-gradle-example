@@ -1,6 +1,8 @@
 
 apply plugin: 'java'
 
+defaultTasks "build"
+
 repositories {
     mavenLocal()
     jcenter()
