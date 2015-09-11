@@ -1,15 +1,40 @@
 
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/groups/public" }
+    }
+    dependencies {
+        classpath("com.ofg:uptodate-gradle-plugin:1.1.0")
+        classpath("com.github.mperry:gradle-gatling-plugin:0.3-SNAPSHOT")
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: "com.github.mperry.gatling"
 
 defaultTasks "build"
 
 repositories {
     mavenLocal()
     jcenter()
+    maven { url "https://oss.sonatype.org/content/groups/public" }
 }
+
+gatling {
+    list true
+    dryRun false
+    include "com.github.mperry.gatling.*" // include all simulations in this package
+    exclude ".*"
+}
+
+test.dependsOn gatlingRun
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
+    compile "com.github.mperry:gradle-gatling-plugin:0.3-SNAPSHOT"
 
     testCompile 'junit:junit:4.12'
 }
