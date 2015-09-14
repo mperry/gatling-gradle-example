@@ -15,7 +15,21 @@ apply plugin: 'java'
 apply plugin: 'scala'
 apply plugin: "com.github.mperry.gatling"
 
+apply plugin: 'groovy'
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+
 defaultTasks "build"
+
+ext {
+    startPort = 8094
+    stopPort = 8095
+    stopKey = "stopKey"
+    groovyVersion = "2.3.6"
+}
+
+
 
 repositories {
     mavenLocal()
@@ -30,11 +44,16 @@ gatling {
     exclude ".*"
 }
 
-test.dependsOn gatlingRun
+//test.dependsOn gatlingRun
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.12'
     compile "com.github.mperry:gradle-gatling-plugin:0.3-SNAPSHOT"
 
+    compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+
+
     testCompile 'junit:junit:4.12'
 }
+
